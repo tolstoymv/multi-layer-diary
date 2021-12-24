@@ -20,7 +20,7 @@ object MyApp extends zio.App {
 
   private val db = Database.forConfig("chapter01")
 
-  val services: Kleisli[Task, Request[Task], Response[Task]] = HelloService.service <+> EntryService.service(db)
+  val services = HelloService.service <+> EntryService.service(db)
 
   def run(args: List[String]): URIO[ZEnv, ExitCode] = {
     val serverRun = for {
@@ -36,7 +36,7 @@ object MyApp extends zio.App {
     .flatMap { implicit rts =>
       BlazeServerBuilder[Task]
         .bindHttp(8080, "localhost")
-        .withHttpApp(services)
+        .withHttpApp(services.orNotFound)
         .serve
         .compile
         .drain

@@ -15,6 +15,6 @@ object HelloService {
   object ioz extends Http4sDsl[Task]
   import ioz._
 
-  val service: Kleisli[Task, Request[Task], Response[Task]] =
-    HttpRoutes.of[Task] { case GET -> Root => Ok("hello!") }.orNotFound
+  val service =
+    HttpRoutes.of[Task] { case GET -> Root => Ok("hello!") }
 }
