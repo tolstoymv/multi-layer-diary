@@ -12,8 +12,6 @@ import zio.ZIO
 import zio.interop.catz._
 import zio.interop.catz.implicits._
 
-object ioz extends Http4sDsl[Task]
-
 object EntryService {
   object ioz extends Http4sDsl[Task]
   import ioz._
@@ -22,5 +20,9 @@ object EntryService {
     .of[Task] { case GET -> Root / "entries" =>
       ZIO.fromFuture(ex => db.run(EntryQueries.entries.result)).flatMap(x => Ok(x.mkString("[", ",", "]")))
     }
+
+  def addEntry = ???
+
+  def getEntriesForDate = ???
 
 }
