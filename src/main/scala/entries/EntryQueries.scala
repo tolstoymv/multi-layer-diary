@@ -11,4 +11,6 @@ object EntryQueries {
 
   val create = entries.schema.create
 
+  def add(entry: Entry) = entries += entry
+
 }

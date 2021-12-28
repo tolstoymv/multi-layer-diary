@@ -3,7 +3,7 @@ package services
 
 import entries.EntryQueries
 
-import org.http4s.HttpRoutes
+import com.tolstoy.diary.entries.Entry
 import org.http4s.dsl.Http4sDsl
 import slick.jdbc.H2Profile
 import slick.jdbc.H2Profile.api._
@@ -16,12 +16,11 @@ object EntryService {
   object ioz extends Http4sDsl[Task]
   import ioz._
 
-  def service(db: H2Profile.backend.DatabaseDef) = HttpRoutes
-    .of[Task] { case GET -> Root / "entries" =>
-      ZIO.fromFuture(ex => db.run(EntryQueries.entries.result)).flatMap(x => Ok(x.mkString("[", ",", "]")))
-    }
+  def getAllEntries(db: H2Profile.backend.DatabaseDef) =
+    ZIO.fromFuture(ex => db.run(EntryQueries.entries.result))
 
-  def addEntry = ???
+  def addEntry(db: H2Profile.backend.DatabaseDef)(entry: Entry): Task[Int] =
+    ZIO.fromFuture(ex => db.run(EntryQueries.add(entry)))
 
   def getEntriesForDate = ???
 

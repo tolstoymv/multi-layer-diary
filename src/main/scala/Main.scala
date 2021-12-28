@@ -6,10 +6,13 @@ import services.HelloService
 
 import cats.data.Kleisli
 import cats.syntax.semigroupk._
+import com.tolstoy.diary.controllers.EntryController
+import org.http4s.HttpRoutes
 import org.http4s.Request
 import org.http4s.Response
 import org.http4s.blaze.server.BlazeServerBuilder
 import org.http4s.dsl.Http4sDsl
+import org.http4s.server.Router
 import slick.jdbc.H2Profile.api._
 import zio._
 import zio.interop.catz._
@@ -20,7 +23,7 @@ object MyApp extends zio.App {
 
   private val db = Database.forConfig("chapter01")
 
-  val services = HelloService.service <+> EntryService.service(db)
+  val routes = Router("/hello" -> HelloService.service, "/entries" -> EntryController.routes(db)).orNotFound
 
   def run(args: List[String]): URIO[ZEnv, ExitCode] = {
     val serverRun = for {
@@ -36,7 +39,7 @@ object MyApp extends zio.App {
     .flatMap { implicit rts =>
       BlazeServerBuilder[Task]
         .bindHttp(8080, "localhost")
-        .withHttpApp(services.orNotFound)
+        .withHttpApp(routes)
         .serve
         .compile
         .drain

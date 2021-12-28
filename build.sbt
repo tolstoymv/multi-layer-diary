@@ -9,6 +9,7 @@ lazy val root = (project in file("."))
   )
 
 val http4sVersion = "0.23.7"
+val circeVersion = "0.14.1"
 
 // Only necessary for SNAPSHOT releases
 resolvers += Resolver.sonatypeRepo("snapshots")
@@ -19,10 +20,15 @@ libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-dsl" % http4sVersion,
   "org.http4s" %% "http4s-blaze-server" % http4sVersion,
   "org.http4s" %% "http4s-blaze-client" % http4sVersion,
+  "org.http4s" %% "http4s-circe" % http4sVersion,
   "dev.zio" %% "zio" % zioVersion,
   "dev.zio" %% "zio-test" % zioVersion,
   "dev.zio" %% "zio-interop-cats" % "3.2.9.0",
   "com.typesafe.slick" %% "slick" % "3.3.3",
   "com.h2database" % "h2" % "2.0.202",
-  "ch.qos.logback" % "logback-classic" % "1.2.3"
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "io.circe" %% "circe-core" % circeVersion,
+  "io.circe" %% "circe-generic" % circeVersion,
+  "io.circe" %% "circe-parser" % circeVersion,
+  "io.circe" %% "circe-parser" % circeVersion
 )
