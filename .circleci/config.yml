@@ -23,6 +23,7 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
+      SBT_VERSION: 1.5.7
 
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
