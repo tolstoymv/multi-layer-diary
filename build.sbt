@@ -4,8 +4,7 @@ ThisBuild / scalaVersion := "2.13.7"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "MultilayerDiary",
-    idePackagePrefix := Some("com.tolstoy.diary")
+    name := "MultilayerDiary"
   )
 
 val http4sVersion = "0.23.7"
